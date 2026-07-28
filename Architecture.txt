@@ -1,0 +1,57 @@
+React UI
+   |
+   | POST /api/deploy
+   v
+Express API
+   |
+   | Save deployment (Pending)
+   | Push BullMQ job
+   v
+Redis Queue (BullMQ)
+   |
+   v
+Worker Process
+   |
+   | AWS SSM -> run Docker on EC2
+   | AWS Lambda Invoke
+   v
+MongoDB update status
+   |
+   v
+Socket.IO emits live update
+   |
+   v
+React dashboard auto-updates
+
+
+
+Backend Structure
+backend/
+├── src/
+│   ├── server.js
+│   ├── config/
+│   │   ├── db.js
+│   │   └── redis.js
+│   ├── models/
+│   │   └── Deployment.js
+│   ├── routes/
+│   │   └── deployRoutes.js
+│   ├── queue/
+│   │   ├── deploymentQueue.js
+│   │   └── deploymentWorker.js
+│   ├── services/
+│   │   ├── awsSSMService.js
+│   │   └── lambdaService.js
+│   └── sockets/
+│       └── socket.js
+├── package.json
+└── .env
+
+
+frontend/
+├── src/
+│   ├── App.jsx
+│   ├── api.js
+│   ├── components/
+│   │   ├── DeployForm.jsx
+│   │   └── StatusDashboard.jsx
